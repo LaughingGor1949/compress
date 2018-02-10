@@ -9,10 +9,11 @@ namespace compress
 class Lz77Compress
 {
 
-struct LZ77
+struct LZ77Window
 {
-    uint8_t* windowData;
-    uint8_t* buffData;
+    uint8_t* searchBuff;
+    uint8_t* lookaheadBuff;
+    uint32_t currentLookaheadBuffLen;
     uint32_t curson;
     uint32_t length;
     uint8_t nextData;
@@ -22,6 +23,7 @@ struct LZ77
 public:
 Lz77Compress();
 cpsStatus lz77Compress(const uint8_t* inputData, uint32_t inputLen, uint8_t* outputData, uint32_t& outputLen);
+void findMaxMatch(LZ77Window* window);
 
 protected:
 const static uint32_t LZ77_TYPE_BITS = 1;
